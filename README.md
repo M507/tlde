@@ -101,3 +101,34 @@ Usage of /tmp/go-build672141740/b001/exe/tlde:
   -u string
         URL (default "http://www1.web.google.com.sh/")
 ```
+
+### Examples of how it can be used: 
+```
+$ export domain="https://hackerone.com/";
+$ curl -s https://dns.bufferover.run/dns?q=.$(tlde -u $domain -r -t)|jq -r .FDNS_A[] | sed -s 's/,/\n/g' | httpx -silent | anew | tlde -s -r -t
+104.16.99.52.
+docs.hackerone.com
+mta-sts.forwarding.hackerone.com
+hacker0x01.github.io
+mta-sts.hackerone.com
+104.16.100.52.
+mta-sts.managed.hackerone.com
+api.hackerone.com
+www.hackerone.com
+hackerone.zendesk.com
+support.hackerone.com
+$ curl -s "https://jldc.me/anubis/subdomains/"$(tlde -u $domain -r -t) | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew
+www.hackerone.com
+a.ns.hackerone.com
+b.ns.hackerone.com
+support.hackerone.com
+links.hackerone.com
+api.hackerone.com
+go.hackerone.com
+info.hackerone.com
+mta-sts.managed.hackerone.com
+mta-sts.hackerone.com
+docs.hackerone.com
+mta-sts.forwarding.hackerone.com
+events.hackerone.com
+```
